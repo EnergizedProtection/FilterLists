@@ -13,8 +13,8 @@ interface IHomeState {
     loadingRuleCount: boolean;
     software: ISoftwareDto[];
     loadingSoftware: boolean;
-    languages: ILanguageDto[];
-    loadingLanguages: boolean;
+    //languages: ILanguageDto[];
+    //loadingLanguages: boolean;
     pageSize: number;
 }
 
@@ -28,8 +28,8 @@ export class Home extends React.Component<RouteComponentProps<{}>, IHomeState> {
             loadingRuleCount: true,
             software: [],
             loadingSoftware: true,
-            languages: [],
-            loadingLanguages: true,
+            //languages: [],
+            //loadingLanguages: true,
             pageSize: 20
         };
         this.updatePageSize = this.updatePageSize.bind(this);
@@ -38,8 +38,8 @@ export class Home extends React.Component<RouteComponentProps<{}>, IHomeState> {
     render() {
         const contents = this.state.loadingLists ||
             this.state.loadingRuleCount ||
-            this.state.loadingSoftware ||
-            this.state.loadingLanguages
+            this.state.loadingSoftware //||
+            //this.state.loadingLanguages
             ? <p>
                   <em>Loading...</em>
               </p>
@@ -78,14 +78,14 @@ export class Home extends React.Component<RouteComponentProps<{}>, IHomeState> {
                     loadingSoftware: false
                 });
             });
-        fetch("https://filterlists.com/api/v1/languages")
-            .then(response => response.json() as Promise<ILanguageDto[]>)
-            .then(data => {
-                this.setState({
-                    languages: data,
-                    loadingLanguages: false
-                });
-            });
+        //fetch("https://filterlists.com/api/v1/languages")
+        //    .then(response => response.json() as Promise<ILanguageDto[]>)
+        //    .then(data => {
+        //        this.setState({
+        //            languages: data,
+        //            loadingLanguages: false
+        //        });
+        //    });
     }
 
     updatePageSize() {
@@ -175,7 +175,7 @@ export class Home extends React.Component<RouteComponentProps<{}>, IHomeState> {
                                    style={{ width: "100%" }}
                                    value={filter ? filter.value : "any"}>
                                    <option value="any">Any</option>
-                                   {state.languages.map((e: any) => <option value={e.iso6391}>{e.name}</option>)}
+                                   {state.lists.map((list: IListDto) => list.languages.map((lang: IListLanguageDto) => <option value={lang.iso6391}>{lang.name}</option>)).filter((v: any, i: any, s: any) => s.indexOf(v) === i)}
                                </select>,
                            sortable: false,
                            Cell: (cell: any) => <div className="fl-tag-container">{cell.value.map(
