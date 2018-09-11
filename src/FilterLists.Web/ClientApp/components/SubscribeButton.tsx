@@ -35,7 +35,7 @@ export default class SubscribeButton extends React.Component<ISubscribeButtonPro
 
     render() {
         const href = `abp:subscribe?location=${encodeURIComponent(this.props.url)}&amp;title=${encodeURIComponent(this.props.name)}`;
-        const title = `${this.state.titlePrefix}Subscribe to list with a browser extension supporting the \"abp:\" protocol (e.g. uBlock Origin, AdBlock Plus).`;
+        const title = `${this.state.titlePrefix}Subscribe to list with a browser extension supporting the \"abp:\" protocol (e.g. uBlock Origin, Adblock Plus).`;
         const className = `btn ${this.state.buttonClassName} btn-block fl-btn-details-action`;
         return this.props.url
             ? <a href={href} title={title} className={className}>
