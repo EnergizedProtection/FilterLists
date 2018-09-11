@@ -1,10 +1,9 @@
 import * as React from "react";
 import "isomorphic-fetch";
 import * as moment from "moment";
-import SubscribeButton from "./SubscribeButton";
+import SubscribeButtonGroup from "./SubscribeButtonGroup";
 
 export default class ListDetails extends React.Component<any, any> {
-
     constructor(props: any) {
         super(props);
         this.state = {
@@ -76,10 +75,8 @@ function ListInfo(props: any) {
 
 function ListUrls(props: any) {
     return <div className="col-3 p-0 btn-group-vertical justify-content-start d-flex align-items-end">
-               <SubscribeButton details={props.details}/>
+               <SubscribeButtonGroup name={props.details.name} url={props.details.viewUrl} urlMirror1={props.details.viewUrlMirror1} urlMirror2={props.details.viewUrlMirror2}/>
                <ViewUrl url={props.details.viewUrl} name={props.details.name}/>
-               <ViewUrlMirror url={props.details.viewUrlMirror1} name={props.details.name}/>
-               <ViewUrlMirror url={props.details.viewUrlMirror2} name={props.details.name}/>
                <HomeUrl url={props.details.homeUrl} name={props.details.name}/>
                <PolicyUrl url={props.details.policyUrl} name={props.details.name}/>
                <DonateUrl url={props.details.donateUrl} name={props.details.name}/>
@@ -174,8 +171,8 @@ function ViewUrl(props: any) {
     return props.url.indexOf("https://") === -1
         ? ViewUrlNotSecure()
         : props.url.indexOf("web.archive.org") === -1
-            ? ViewUrlPrimary()
-            : ViewUrlWayback();
+        ? ViewUrlPrimary()
+        : ViewUrlWayback();
 
     function ViewUrlPrimary() {
         return <a href={props.url}
@@ -205,8 +202,8 @@ function ViewUrl(props: any) {
 function ViewUrlMirror(props: any) {
     return props.url
         ? props.url.indexOf("https://") === -1
-            ? ViewUrlNotSecure()
-            : viewUrlSecondary()
+        ? ViewUrlNotSecure()
+        : viewUrlSecondary()
         : null;
 
     function viewUrlSecondary() {
