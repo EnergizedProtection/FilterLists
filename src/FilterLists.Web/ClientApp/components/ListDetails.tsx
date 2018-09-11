@@ -1,6 +1,7 @@
 import * as React from "react";
 import "isomorphic-fetch";
 import * as moment from "moment";
+import SubscribeButton from "./SubscribeButton";
 
 export default class ListDetails extends React.Component<any, any> {
 
@@ -75,9 +76,7 @@ function ListInfo(props: any) {
 
 function ListUrls(props: any) {
     return <div className="col-3 p-0 btn-group-vertical justify-content-start d-flex align-items-end">
-               <SubscribeUrl url={props.details.viewUrl} name={props.details.name}/>
-               <SubscribeUrlMirror url={props.details.viewUrlMirror1} name={props.details.name}/>
-               <SubscribeUrlMirror url={props.details.viewUrlMirror2} name={props.details.name}/>
+               <SubscribeButton details={props.details}/>
                <ViewUrl url={props.details.viewUrl} name={props.details.name}/>
                <ViewUrlMirror url={props.details.viewUrlMirror1} name={props.details.name}/>
                <ViewUrlMirror url={props.details.viewUrlMirror2} name={props.details.name}/>
@@ -170,62 +169,6 @@ function License(props: any) {
               </li>)
         : null;
 }
-
-function SubscribeUrl(props: any) {
-    return props.url.indexOf("https://") === -1
-        ? SubscribeUrlNotSecure()
-        : props.url.indexOf("web.archive.org") === -1
-            ? SubscribeUrlPrimary()
-            : SubscribeUrlWayback();
-
-    function SubscribeUrlPrimary() {
-        return <a href={`abp:subscribe?location=${encodeURIComponent(props.url)}&amp;title=${encodeURIComponent(props.name)}`}
-                  className="btn btn-primary btn-block fl-btn-details-action"
-                  title={`Subscribe to list with browser extension supporting \"abp:\" protocol (e.g. uBlock Origin, AdBlock Plus).`}>
-                   Subscribe
-               </a>;
-    }
-
-    function SubscribeUrlWayback() {
-        return <a href={`abp:subscribe?location=${encodeURIComponent(props.url)}&amp;title=${encodeURIComponent(props.name)}`}
-                  className="btn btn-secondary btn-block fl-btn-details-action"
-                  title={`Archive.org Mirror (Original Offline) - Subscribe to list with browser extension supporting \"abp:\" protocol (e.g. uBlock Origin, AdBlock Plus).`}>
-                   Subscribe
-               </a>;
-    }
-
-    function SubscribeUrlNotSecure() {
-        return <a href={`abp:subscribe?location=${encodeURIComponent(props.url)}&amp;title=${encodeURIComponent(props.name)}`}
-                  className="btn btn-danger btn-block fl-btn-details-action"
-                  title={`Not Secure - Subscribe to list with browser extension supporting \"abp:\" protocol (e.g. uBlock Origin, AdBlock Plus).`}>
-                   Subscribe
-               </a>;
-    }
-};
-
-function SubscribeUrlMirror(props: any) {
-    return props.url
-        ? props.url.indexOf("https://") === -1
-            ? SubscribeUrlNotSecure()
-            : SubscribeUrlSecondary()
-        : null;
-
-    function SubscribeUrlSecondary() {
-        return <a href={`abp:subscribe?location=${encodeURIComponent(props.url)}&amp;title=${encodeURIComponent(props.name)}`}
-                  className="btn btn-secondary btn-block fl-btn-details-action"
-                  title={`Mirror - Subscribe to list with browser extension supporting \"abp:\" protocol (e.g. uBlock Origin, AdBlock Plus).`}>
-                   Subscribe
-               </a>;
-    }
-
-    function SubscribeUrlNotSecure() {
-        return <a href={`abp:subscribe?location=${encodeURIComponent(props.url)}&amp;title=${encodeURIComponent(props.name)}`}
-                  className="btn btn-danger btn-block fl-btn-details-action"
-                  title={`Mirrow - Not Secure - Subscribe to list with browser extension supporting \"abp:\" protocol (e.g. uBlock Origin, AdBlock Plus).`}>
-                   Subscribe
-               </a>;
-    }
-};
 
 function ViewUrl(props: any) {
     return props.url.indexOf("https://") === -1
